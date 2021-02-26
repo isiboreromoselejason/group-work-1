@@ -57,6 +57,23 @@
             </div>
         </div>
     </div>
-
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                subject: 'Math',
+                location: 'London',
+                price: '£100',
+                spaces: 5,
+            },
+            methods: {
+                addToCart () {
+                    if (this.spaces > 0) {
+                        this.spaces--
+                    }
+                }
+            }
+        })
+    </script>
 </body>
 </html>
