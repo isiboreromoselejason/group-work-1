@@ -4,9 +4,43 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mathematic Cart</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 </head>
 <body>
-    
+    <div id="app">
+        <div class="container">
+            <div class="cart-card">
+                <p>
+                    <b>Subject:</b>
+                    <span>
+                        {{ subject }}
+                    </span>
+                </p>
+                <p>
+                    <b>Location:</b>
+                    <span>
+                        {{ location }}
+                    </span>
+                </p>
+                <p>
+                    <b>Price:</b>
+                    <span>
+                        {{ price }}
+                    </span>
+                </p>
+                <p>
+                    <b>Spaces:</b>
+                    <span>
+                        {{ spaces }}
+                    </span>
+                </p>
+                <button v-on:click="addToCart">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
