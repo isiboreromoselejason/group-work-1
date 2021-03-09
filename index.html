@@ -70,38 +70,151 @@
 </head>
 <body>
     <div id="app">
-        <div class="container">
-            <div class="cart-card">
-                <p>
-                    <b>Subject:</b>
+        <div v-if="page === 'lessons'" class="container">
+            <div class="header">
+                <div class="title">
+                    All Lessons
+                </div>
+                <div class="sort">
+                    <select v-model="sortType">
+                        <option value="">
+                            Sort Lessons
+                        </option>
+                        <option value="subject">
+                            Subject
+                        </option>
+                        <option value="location">
+                            Location
+                        </option>
+                        <option value="price">
+                            Price
+                        </option>
+                        <option value="avail">
+                            Availability
+                        </option>
+                    </select>
+                    <select v-model="sortOrder">
+                        <option value="asc">
+                            Ascending
+                        </option>
+                        <option value="desc">
+                            Descending
+                        </option>
+                    </select>
+                    <button v-on:click="page = 'cart'" >
+                        Shopping Cart
+                    </button>
+                </div>
+            </div>
+            <hr>
+            <div class="lessons-container">
+                <div v-for="lesson in lessons" :key="lesson.subject" class="cart-card">
+                    <div class="inner">
+                        <div class="text-section">
+                            <span>
+                                <b>Subject:</b>
+                                <span>
+                                    {{ lesson.subject }}
+                                </span>
+                            </span>
+                            <span>
+                                <b>Location:</b>
+                                <span>
+                                    {{ lesson.location }}
+                                </span>
+                            </span>
+                            <span>
+                                <b>Price:</b>
+                                <span>
+                                    {{ lesson.price }}
+                                </span>
+                            </span>
+                            <span>
+                                <b>Spaces:</b>
+                                <span>
+                                    {{ lesson.spaces }}
+                                </span>
+                            </span>
+                        </div>
+                        <div class="image-section">
+                            <img :src="lesson.image">
+                        </div>
+                    </div>
+                    <button v-show="lesson.spaces > 0" v-on:click="addToCart(lesson)">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div v-if="page === 'cart'" class="container">
+            <div class="header">
+                <div class="title">
+                    <button v-on:click="page = 'lessons'">
+                        Go Back
+                    </button>
+                    Shopping Cart
+                </div>
+            </div>
+            <hr>
+            <div class="lessons-container">
+                <div v-for="(lesson, count) in cart" :key="count" class="cart-card">
+                    <div class="inner">
+                        <div class="text-section">
+                            <span>
+                                <b>Subject:</b>
+                                <span>
+                                    {{ lesson.subject }}
+                                </span>
+                            </span>
+                            <span>
+                                <b>Location:</b>
+                                <span>
+                                    {{ lesson.location }}
+                                </span>
+                            </span>
+                            <span>
+                                <b>Price:</b>
+                                <span>
+                                    {{ lesson.price }}
+                                </span>
+                            </span>
+                            <span>
+                                <b>Spaces:</b>
+                                <span>
+                                    {{ lesson.spaces }}
+                                </span>
+                            </span>
+                        </div>
+                        <div class="image-section">
+                            <img :src="lesson.image">
+                        </div>
+                    </div>
+                    <button v-show="lesson.spaces > 0" v-on:click="addToCart(lesson)">
+                        Remove
+                    </button>
+                </div>
+            </div>
+            <div class="checkout-container">
+                <div class="title">
+                    Checkout
+                </div>
+                <div class="form-input">
                     <span>
-                        {{ subject }}
+                        Name:
                     </span>
-                </p>
-                <p>
-                    <b>Location:</b>
+                    <input v-model="name" type="text">
                     <span>
-                        {{ location }}
+                        Phone:
                     </span>
-                </p>
-                <p>
-                    <b>Price:</b>
-                    <span>
-                        {{ price }}
-                    </span>
-                </p>
-                <p>
-                    <b>Spaces:</b>
-                    <span>
-                        {{ spaces }}
-                    </span>
-                </p>
-                <button v-on:click="addToCart">
-                    Add to Cart
-                </button>
+                    <input v-model="phone" type="number">
+                    <button @click="submitOrder" v-show="name.length > 0 && phone.length > 0">
+                        Checkout
+                    </button>
+                </div>
             </div>
         </div>
     </div>
+
     <script>
         let app = new Vue({
             el: '#app',
